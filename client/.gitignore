@@ -22,3 +22,23 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Node.js dependencies
+/node_modules
+/client/node_modules
+/server/node_modules
+
+# Environment variables 
+
+.env
+*.env
+/client/.env
+/server/.env
+
+# Build output folders
+/client/dist
+/server/dist
+
+# Vite cache
+/client/node_modules/.vite
+/.vite/
