@@ -42,3 +42,6 @@ node_modules
 # Vite cache
 /client/node_modules/.vite
 /.vite/
+
+#Account Key
+/server/ServiceAccountKey.json
