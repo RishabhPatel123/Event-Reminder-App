@@ -14,9 +14,7 @@ require('dotenv').config();
 //Setup App
 const app = express();
 const PORT =process.env.PORT || 8080;
-const serviceAccountPath = process.env.NODE_ENV === 'production' 
-  ? '/etc/secrets/serviceAccountKey.json' 
-  : './serviceAccountKey.json';
+const serviceAccountPath = process.env.NODE_ENV === 'production' ? '/etc/secrets/ServiceAccountKey.json' : './ServiceAccountKey.json';
 
 const serviceAccount = require(serviceAccountPath);    //Firebase Service accaount key
 
