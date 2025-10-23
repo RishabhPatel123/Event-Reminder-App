@@ -14,7 +14,11 @@ require('dotenv').config();
 //Setup App
 const app = express();
 const PORT =process.env.PORT || 8080;
-const serviceAccount = require('./serviceAccountKey.json');     //Firebase Service accaount key
+const serviceAccountPath = process.env.NODE_ENV === 'production' 
+  ? '/etc/secrets/serviceAccountKey.json' 
+  : './serviceAccountKey.json';
+
+const serviceAccount = require(serviceAccountPath);    //Firebase Service accaount key
 
 app.use(cors());
 app.use(express.json());    // to understand JSON data

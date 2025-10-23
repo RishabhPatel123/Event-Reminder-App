@@ -85,7 +85,7 @@ const Dashboard = () => {
 
     if (subscription) {
       const token = await currentUser.getIdToken();
-      const apiUrl = 'http://localhost:8080';
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8080';
       await axios.post(
         `${apiUrl}/api/subscribe`,
         { subscription }, 
