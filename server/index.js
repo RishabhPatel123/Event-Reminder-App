@@ -18,8 +18,8 @@ const PORT =process.env.PORT || 8080;
 // If NODE_ENV is 'production' (on Render), use Render's secret path
 // Otherwise, use the local file
 const serviceAccountPath = process.env.NODE_ENV === 'production' 
-  ? '/etc/secrets/serviceAccountKey.json' 
-  : './serviceAccountKey.json';
+  ? '/etc/secrets/ServiceAccountKey.json' 
+  : './ServiceAccountKey.json';
 
 const serviceAccount = require(serviceAccountPath);
 app.use(cors());
