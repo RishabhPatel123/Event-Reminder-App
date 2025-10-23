@@ -26,13 +26,13 @@ const AppContent =() => {
           </Heading>
           <Spacer /> 
 
-          <Button as={RouterLink} to="/" px={4} variant={pathname === "/" ? "solid" : "ghost"} colorScheme={pathname === "/" ? "blue" : "gray"}>
+          <Button as={RouterLink} to="/"  variant={pathname === "/" ? "solid" : "ghost"} colorScheme={pathname === "/" ? "blue" : "gray"}>
             Home
           </Button>
 
           {currentUser ? (
             <>
-              <Button as={RouterLink} to="/dashboard" px={4}  variant={pathname === "/dashboard" ? "solid" : "ghost"} colorScheme={pathname === "/dashboard" ? "blue" : "gray"}>
+              <Button as={RouterLink} to="/dashboard" variant={pathname === "/dashboard" ? "solid" : "ghost"} colorScheme={pathname === "/dashboard" ? "blue" : "gray"}>
                 Dashboard
               </Button>
               <Button onClick={logout} variant="ghost">
@@ -41,10 +41,10 @@ const AppContent =() => {
             </>
           ) : (
             <>
-              <Button as={RouterLink} to="/login" px={4}  variant={pathname === "/login" ? "solid" : "ghost"} colorScheme={pathname === "/login" ? "blue" : "gray"}>
+              <Button as={RouterLink} to="/login"  variant={pathname === "/login" ? "solid" : "ghost"} colorScheme={pathname === "/login" ? "blue" : "gray"}>
                 Login
               </Button>
-              <Button as={RouterLink} to="/signup" px={4} variant={pathname === "/signup" ? "solid" : "ghost"} colorScheme={pathname === "/signup" ? "blue" : "gray"}>
+              <Button as={RouterLink} to="/signup"  variant={pathname === "/signup" ? "solid" : "ghost"} colorScheme={pathname === "/signup" ? "blue" : "gray"}>
                 Sign Up
               </Button>
             </>
