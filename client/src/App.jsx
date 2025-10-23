@@ -5,7 +5,7 @@ import { useAuth } from './context/authContext';
 import ProtectedRoute from './ProtectedRoute';
 //====Pages import 
 import SignUp from './pages/SignUp';
-import LogIn from './pages/LogIn';
+import LogIn from './pages/Login';
 import Dashboard  from './pages/dashboard';
 import Home from './pages/Home';
 
