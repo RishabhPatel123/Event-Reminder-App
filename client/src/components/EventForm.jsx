@@ -27,7 +27,7 @@ const EventForm = ({ onEventCreated }) => {
     try {
       // Get the user's Firebase auth token
       const token = await currentUser.getIdToken();
-      const apiUrl = 'http://localhost:8080';
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8080';
       const response = await axios.post(
         `${apiUrl}/api/events`,
         { title, dateTime, image }, // The data to send
