@@ -45,7 +45,7 @@ const LogIn =()=>{
                                 />
                             </FormControl>
                             <FormControl isRequired>
-                                <FormLabel>Email address</FormLabel>
+                                <FormLabel>Password</FormLabel>
                                 <Input type = "password" value ={password}
                                 onChange = {(e)=>setPassword(e.target.value)}
                                 placeholder = "Enter Your Password"
