@@ -26,7 +26,7 @@ const Dashboard = () => {
     setLoading(true);
     try {
       const token = await currentUser.getIdToken();
-      const apiUrl = 'http://localhost:8080';
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8080';
       const response = await axios.get(`${apiUrl}/api/events`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
