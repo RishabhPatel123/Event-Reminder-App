@@ -6,7 +6,7 @@ This is a full-stack web application that allows users to create and manage even
 
 ## 🚀 Live Demo Links
 
-* **Frontend (Vercel):** https://event-reminder-hgsn13rhh-rishabh-patels-projects.vercel.app/
+* **Frontend (Vercel):** https://event-reminder-app-kappa.vercel.app
 * **Backend (Render):** https://event-reminder-jpzw.onrender.com
 
 ---
