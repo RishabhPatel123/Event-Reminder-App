@@ -53,11 +53,10 @@ const EventForm = ({ eventToEdit, onFormSubmit, onClose }) => {
     try {
       const token = await currentUser.getIdToken();
       const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8080';
-<<<<<<< HEAD
+
       // Include status in the event data
-      const eventData = { title, dateTime, image, status }; 
-      let response;
-=======
+      const eventData = { title, dateTime, image, status };
+
       const response = await axios.post(
         `${apiUrl}/api/events`,
         { title, dateTime, image }, // The data to send
@@ -67,7 +66,7 @@ const EventForm = ({ eventToEdit, onFormSubmit, onClose }) => {
           }
         }
       );
->>>>>>> 64976111922db1f9b66ade936b49c44ce50e9d53
+
 
       if (eventToEdit) {
         response = await axios.put(`${apiUrl}/api/events/${eventToEdit._id}`, eventData, {
@@ -136,8 +135,4 @@ const EventForm = ({ eventToEdit, onFormSubmit, onClose }) => {
     </Box>
   );
 };
-<<<<<<< HEAD
-
-=======
->>>>>>> 64976111922db1f9b66ade936b49c44ce50e9d53
 export default EventForm;
