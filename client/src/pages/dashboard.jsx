@@ -38,6 +38,11 @@ import {
   Flex,
 } from '@chakra-ui/react';
 
+import { motion, AnimatePresence } from 'framer-motion';
+
+const MotionBox = motion(Box);
+const MotionContainer = motion(Container);
+
 const Dashboard = () => {
   const { currentUser, logout } = useAuth();
   const navigate = useNavigate();
@@ -178,7 +183,13 @@ const Dashboard = () => {
   const cardColor = useColorModeValue('gray.800', 'white');
 
   return (
-    <Container maxW="container.xl" py={10}>
+    <MotionContainer
+      maxW="container.xl"
+      py={10}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
       <HStack justify="space-between" mb={6}>
         <Heading as="h2" size="lg">Dashboard</Heading>
         <HStack>
@@ -216,19 +227,40 @@ const Dashboard = () => {
         <Text>No events found. Click "Create New Event" to add one!</Text>
       ) : (
         <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={6}>
-          {filteredEvents.map(event => (
-            <Box key={event._id} bg={cardBg} color={cardColor} borderRadius="lg" boxShadow="md" overflow="hidden">
+          {filteredEvents.map((event, index) => (
+            <MotionBox
+              key={event._id}
+              bg={cardBg}
+              color={cardColor}
+              borderRadius="lg"
+              boxShadow="md"
+              overflow="hidden"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: index * 0.1 }}
+              whileHover={{ scale: 1.03, boxShadow: 'xl' }}
+              layout
+            >
               <Image src={event.image || 'https://placehold.co/150.png'} alt={event.title} h="200px" w="100%" objectFit="cover" />
               <Box p={5}>
                 <Badge colorScheme={event.status === 'Upcoming' ? 'green' : 'gray'}>{event.status}</Badge>
                 <Heading as="h4" size="md" mt={2} noOfLines={1}>{event.title}</Heading>
-                <Text fontSize="sm" color="gray.500" mt={2}>{new Date(event.dateTime).toLocaleString()}</Text>
+                <Text fontSize="sm" color="gray.500" mt={2}>
+                  {new Date(event.dateTime).toLocaleDateString('en-GB', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: true
+                  })}
+                </Text>
                 <HStack justify="flex-end" mt={4}>
                   <IconButton icon={<EditIcon />} aria-label="Edit Event" onClick={() => openEditForm(event)} />
                   <IconButton icon={<DeleteIcon />} aria-label="Delete Event" colorScheme="red" onClick={() => openDeleteAlert(event)} />
                 </HStack>
               </Box>
-            </Box>
+            </MotionBox>
           ))}
         </SimpleGrid>
       )}
@@ -260,7 +292,7 @@ const Dashboard = () => {
           </AlertDialogContent>
         </AlertDialogOverlay>
       </AlertDialog>
-    </Container>
+    </MotionContainer>
   );
 };
 

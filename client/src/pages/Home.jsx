@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useAuth } from '../context/authContext';
 import { motion } from 'framer-motion';
 import TimeWidget from '../components/TimeWidget';
 import WeatherWidget from '../components/WeatherWidget';
@@ -22,21 +23,39 @@ const MotionBox = motion(Box);
 const Home = () => {
   const [publicEvents, setPublicEvents] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { currentUser } = useAuth();
 
   useEffect(() => {
-    const fetchPublicEvents = async () => {
+    const fetchEvents = async () => {
+      setLoading(true);
       try {
         const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8080';
-        const response = await axios.get(`${apiUrl}/api/events/public`);
-        setPublicEvents(response.data);
+        let data = [];
+
+        if (currentUser) {
+          // Fetch user's private events
+          const token = await currentUser.getIdToken();
+          const response = await axios.get(`${apiUrl}/api/events`, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          // Filter for upcoming and take top 6
+          data = response.data
+            .filter(e => e.status === 'Upcoming')
+            .slice(0, 6);
+        } else {
+          // Fetch public events
+          const response = await axios.get(`${apiUrl}/api/events/public`);
+          data = response.data;
+        }
+        setPublicEvents(data);
       } catch (err) {
-        console.error('Error fetching public events:', err);
+        console.error('Error fetching events:', err);
       } finally {
         setLoading(false);
       }
     };
-    fetchPublicEvents();
-  }, []);
+    fetchEvents();
+  }, [currentUser]);
 
   const cardBg = useColorModeValue('white', 'gray.700');
   const cardColor = useColorModeValue('gray.800', 'white');
@@ -94,7 +113,7 @@ const Home = () => {
       <Heading as="h2" size="xl" mb={6} textAlign="center">
         Upcoming Events
       </Heading>
-      
+
       {loading ? (
         <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={6}>
           {Array.from({ length: 3 }).map((_, i) => renderSkeleton())}
@@ -129,7 +148,14 @@ const Home = () => {
                   {event.title}
                 </Heading>
                 <Text fontSize="sm" color="gray.500" mt={2}>
-                  {new Date(event.dateTime).toLocaleString()}
+                  {new Date(event.dateTime).toLocaleDateString('en-GB', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: true
+                  })}
                 </Text>
               </Box>
             </MotionBox>

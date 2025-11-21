@@ -27,8 +27,11 @@ const EventForm = ({ eventToEdit, onFormSubmit, onClose }) => {
   useEffect(() => {
     if (eventToEdit) {
       setTitle(eventToEdit.title);
-      const localDateTime = new Date(eventToEdit.dateTime).toISOString().slice(0, 16);
-      setDateTime(localDateTime);
+      // Convert UTC to local time for the datetime-local input
+      const date = new Date(eventToEdit.dateTime);
+      const offset = date.getTimezoneOffset() * 60000; // offset in milliseconds
+      const localISOTime = new Date(date.getTime() - offset).toISOString().slice(0, 16);
+      setDateTime(localISOTime);
       setImage(eventToEdit.image || '');
       setStatus(eventToEdit.status || 'Upcoming'); // Set status from event
     } else {
@@ -54,18 +57,14 @@ const EventForm = ({ eventToEdit, onFormSubmit, onClose }) => {
       const token = await currentUser.getIdToken();
       const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8080';
 
-      // Include status in the event data
-      const eventData = { title, dateTime, image, status };
+      // Convert local time string to UTC ISO string for storage
+      const utcDateTime = new Date(dateTime).toISOString();
 
-      const response = await axios.post(
-        `${apiUrl}/api/events`,
-        { title, dateTime, image }, // The data to send
-        {
-          headers: {
-            'Authorization': `Bearer ${token}` // The auth token
-          }
-        }
-      );
+      // Include status in the event data
+      const eventData = { title, dateTime: utcDateTime, image, status };
+      let response;
+
+
 
 
       if (eventToEdit) {
