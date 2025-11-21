@@ -270,5 +270,9 @@ const StatBox = ({ label, value }) => (
     <Heading size="lg">{value}</Heading>
   </Box>
 );
+<<<<<<< HEAD
 
 export default Dashboard;
+=======
+export default Dashboard;
+>>>>>>> 64976111922db1f9b66ade936b49c44ce50e9d53
