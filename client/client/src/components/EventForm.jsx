@@ -11,14 +11,12 @@ import {
   Alert,
   AlertIcon,
   HStack,
-  Select,
 } from '@chakra-ui/react';
 
 const EventForm = ({ eventToEdit, onFormSubmit, onClose }) => {
   const [title, setTitle] = useState('');
   const [dateTime, setDateTime] = useState('');
   const [image, setImage] = useState('');
-  const [status, setStatus] = useState('Upcoming'); // Add status state
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -27,15 +25,14 @@ const EventForm = ({ eventToEdit, onFormSubmit, onClose }) => {
   useEffect(() => {
     if (eventToEdit) {
       setTitle(eventToEdit.title);
+      // Format the date for the datetime-local input
       const localDateTime = new Date(eventToEdit.dateTime).toISOString().slice(0, 16);
       setDateTime(localDateTime);
       setImage(eventToEdit.image || '');
-      setStatus(eventToEdit.status || 'Upcoming'); // Set status from event
     } else {
       setTitle('');
       setDateTime('');
       setImage('');
-      setStatus('Upcoming'); // Default status for new event
     }
   }, [eventToEdit]);
 
@@ -53,8 +50,7 @@ const EventForm = ({ eventToEdit, onFormSubmit, onClose }) => {
     try {
       const token = await currentUser.getIdToken();
       const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8080';
-      // Include status in the event data
-      const eventData = { title, dateTime, image, status }; 
+      const eventData = { title, dateTime, image };
       let response;
 
       if (eventToEdit) {
@@ -95,17 +91,6 @@ const EventForm = ({ eventToEdit, onFormSubmit, onClose }) => {
           <FormLabel>Image URL (Optional)</FormLabel>
           <Input type="text" value={image} onChange={(e) => setImage(e.target.value)} />
         </FormControl>
-
-        {/* Add Status dropdown for editing */}
-        {eventToEdit && (
-          <FormControl>
-            <FormLabel>Status</FormLabel>
-            <Select value={status} onChange={(e) => setStatus(e.target.value)}>
-              <option value="Upcoming">Upcoming</option>
-              <option value="Completed">Completed</option>
-            </Select>
-          </FormControl>
-        )}
 
         {error && (
           <Alert status="error">

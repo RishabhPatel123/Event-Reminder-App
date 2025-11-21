@@ -18,7 +18,7 @@ const schema = new mongoose.Schema({
         type:String,
         required:false,
     },
-    Status:{
+    status:{
         type:String,
         enum:['Upcoming','Completed'],   // only allows two values
         default:'Upcoming',     //Set default event status to upcoming

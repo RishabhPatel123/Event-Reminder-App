@@ -154,15 +154,15 @@ const Dashboard = () => {
   };
 
   const filteredEvents = useMemo(() => {
-    if (filter === 'Upcoming') return events.filter(e => e.status === 'Upcoming');
-    if (filter === 'Completed') return events.filter(e => e.status === 'Completed');
+    if (filter === 'Upcoming') return events.filter(e => e.Status === 'Upcoming');
+    if (filter === 'Completed') return events.filter(e => e.Status === 'Completed');
     return events;
   }, [events, filter]);
 
   const stats = useMemo(() => ({
     total: events.length,
-    upcoming: events.filter(e => e.status === 'Upcoming').length,
-    completed: events.filter(e => e.status === 'Completed').length,
+    upcoming: events.filter(e => e.Status === 'Upcoming').length,
+    completed: events.filter(e => e.Status === 'Completed').length,
   }), [events]);
 
   const handleLogout = async () => {
@@ -220,7 +220,7 @@ const Dashboard = () => {
             <Box key={event._id} bg={cardBg} color={cardColor} borderRadius="lg" boxShadow="md" overflow="hidden">
               <Image src={event.image || 'https://placehold.co/150.png'} alt={event.title} h="200px" w="100%" objectFit="cover" />
               <Box p={5}>
-                <Badge colorScheme={event.status === 'Upcoming' ? 'green' : 'gray'}>{event.status}</Badge>
+                <Badge colorScheme={event.Status === 'Upcoming' ? 'green' : 'gray'}>{event.Status}</Badge>
                 <Heading as="h4" size="md" mt={2} noOfLines={1}>{event.title}</Heading>
                 <Text fontSize="sm" color="gray.500" mt={2}>{new Date(event.dateTime).toLocaleString()}</Text>
                 <HStack justify="flex-end" mt={4}>
@@ -239,10 +239,10 @@ const Dashboard = () => {
           <ModalHeader>{editingEvent ? 'Edit Event' : 'Create a New Event'}</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
-            <EventForm
-              eventToEdit={editingEvent}
-              onFormSubmit={handleFormSubmit}
-              onClose={onFormClose}
+            <EventForm 
+              eventToEdit={editingEvent} 
+              onFormSubmit={handleFormSubmit} 
+              onClose={onFormClose} 
             />
           </ModalBody>
         </ModalContent>
